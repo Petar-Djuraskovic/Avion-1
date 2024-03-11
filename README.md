@@ -1,0 +1,2 @@
+# Avion-1
+[Chorus] White America, I could be one of your kids White America, Little Eric looks just like this White America, Erica loves my shit I go to TRL, look how many hugs I get (Yo) White America, I could be one of your kids White America, Little Eric looks just like this White America, Erica loves my shit I go to TRL, look how many hugs I get
