@@ -27,25 +27,25 @@ public class ScreenBorderWarp : MonoBehaviour
         if (transform.position.x > xMax)
         {
             transform.position = new Vector3(-xMax, transform.position.y, transform.position.z);
-            Debug.Log("Teleported to back");
+            //Debug.Log("Teleported left");
         }
 
         if (transform.position.x < -xMax)
         {
             transform.position = new Vector3(xMax, transform.position.y, transform.position.z);
-            Debug.Log("Teleported to front");
+            //Debug.Log("Teleported to right");
         }
 
         if (transform.position.y > yMax)
         {
             transform.position = new Vector3(transform.position.x, -yMax, transform.position.z);
-            Debug.Log("Teleported down");
+            //Debug.Log("Teleported down");
         }
 
         if (transform.position.y < -yMax)
         {
             transform.position = new Vector3(transform.position.x, yMax, transform.position.z);
-            Debug.Log("Teleported up");
+            //Debug.Log("Teleported up");
         }
     }
 }

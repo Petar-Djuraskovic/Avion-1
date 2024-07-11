@@ -6,33 +6,33 @@ public class PlayerAvion : MonoBehaviour
     public Rigidbody2D AvionRB;
     public Transform AvionTrans;
     [Header("Throttle")]
-    public float throttleIncrement = 1.7f;
-    [Range(-500f, 0f)] public float throttleMin = 0f;
-    [Range(0f, 500f)] public float throttleMax = 100f;
-    [Range(0f, 100f)] public float throttle = 0;
-    public float velocityFloat = 0f;
-    [Range(0f, 10f)] public float maxSpeed = 4;
+    [Range(0f, 8f)] public float throttleIncrement;
+    public float throttleMin;
+    public float throttleMax;
+    [Range(0f, 100f)] public float throttle;
+    public float velocityFloat;
+    [Range(0f, 15f)] public float maxSpeed;
     [Header("Steering")]
-    [Range(1.0f, 2f)] public float turningForce = 1.5f;
-    public float turningRestraint = 0;  
-    [Range(1f, 10f)] public float TR_Multiplier = 3f;
+    public float turningForce;
+    [Range(1.0f, 2f)] public float turningForceDefault;
+    [Range(0f, 1f)] public float turningRestraint;
+    [Range(1f, 10f)] public float turningRestraintReduction;
+    [Range(0f, 10f)] public float brakeTurningMultiplier;
     [Header("Brakes")]
     public float prevThrottle;
     public bool isBraking = false;
-    public float brakeThrottle = -85;
+    public float brakeThrottle;
 
     void Start()
     {
         AvionRB = this.GetComponent<Rigidbody2D>();
         AvionTrans = transform;
         throttle = 0;
+        turningForce = turningForceDefault;
     }
 
     void FixedUpdate()
     {
-
-        Debug.Log(Time.time);
-
         if (Input.GetKey("a"))
         {
             AvionRB.AddTorque(turningForce * turningRestraint * 4);
@@ -43,20 +43,18 @@ public class PlayerAvion : MonoBehaviour
             AvionRB.AddTorque(turningForce * turningRestraint * -4);
         }
 
-        turningRestraint = VelocityTurningRestraintCalculator();
+        turningRestraint = VelocityTurningRestraintCalculator(velocityFloat);
 
         if (Input.GetKey("w"))
         {
             throttle += throttleIncrement;
             throttle = throttle > throttleMax ? throttleMax : throttle;
-            //Debug.Log("w" + throttle);
         }
 
         if (Input.GetKey("s"))
         {
             throttle -= throttleIncrement;
             throttle = throttle < throttleMin ? throttleMin : throttle;
-            //Debug.Log("s" + throttle);
         }
 
         if (Input.GetKeyDown("e"))
@@ -71,20 +69,24 @@ public class PlayerAvion : MonoBehaviour
 
         if (Input.GetKey(KeyCode.LeftShift))
         {
-            if(!isBraking)
+            if (!isBraking)
             {
                 prevThrottle = throttle;
                 throttle = brakeThrottle;
                 isBraking = true;
+
+                turningForce *= brakeTurningMultiplier;
             }
         }
 
         if (!Input.GetKey(KeyCode.LeftShift))
         {
-            if(isBraking)
+            if (isBraking)
             {
                 throttle = prevThrottle;
                 isBraking = false;
+
+                turningForce = turningForceDefault;
             }
         }
 
@@ -94,13 +96,13 @@ public class PlayerAvion : MonoBehaviour
 
         velocityFloat = CalculateVelocityFloat(AvionRB.velocityX, AvionRB.velocityY);
 
+        velocityFloat = CalculateVelocityFloat(AvionRB.velocityX, AvionRB.velocityY);
+
     }
 
-    float VelocityTurningRestraintCalculator()
+    float VelocityTurningRestraintCalculator(float velocity)
     {
-        float velocity = CalculateVelocityFloat(AvionRB.velocityX, AvionRB.velocityY);
-
-        return 1 - Mathf.InverseLerp(0, maxSpeed * TR_Multiplier, velocity);
+        return 1 - Mathf.InverseLerp(0, maxSpeed * turningRestraintReduction, velocity);
     }
 
     public float CalculateVelocityFloat(float VelocityX, float VelocityY)

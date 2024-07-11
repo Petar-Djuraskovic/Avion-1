@@ -105,11 +105,15 @@ MonoBehaviour:
   throttleMin: 0
   throttleMax: 100
   throttle: 0
+  velocityFloat: 0
   maxSpeed: 4
   turningForce: 1.5
+  turningForceDefault: 1.5
   turningRestraint: 0
-  TR_Multiplier: 5
-  brakeState: 0
+  turningRestraintReduction: 3
+  brakeTurningMultiplier: 1.5
+  prevThrottle: 0
+  isBraking: 0
   brakeThrottle: -85
 --- !u!50 &7645888856017369486
 Rigidbody2D:
