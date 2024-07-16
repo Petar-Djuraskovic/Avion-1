@@ -101,12 +101,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AvionRB: {fileID: 7645888856017369486}
   AvionTrans: {fileID: 3377922306192757695}
-  throttleIncrement: 1.7
+  throttle: 0
+  throttleIncrement: 3.5
   throttleMin: 0
   throttleMax: 100
-  throttle: 0
+  hasThrottleControl: 1
   velocityFloat: 0
   maxSpeed: 4
+  enginePower: 1
+  steering: 0
   turningForce: 1.5
   turningForceDefault: 1.5
   turningRestraint: 0
